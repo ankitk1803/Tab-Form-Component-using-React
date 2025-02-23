@@ -3,7 +3,6 @@ import Profile from "./Profile"
 import Interests from "./Interest"
 import Settings from "./Setting"
 import Submit from "./Submit";
- 
 
 const Tabform = () => {
   const [data, setData] = useState({
