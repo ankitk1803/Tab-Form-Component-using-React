@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import Profile from "./Profile"
 import Interests from "./Interest"
 import Settings from "./Setting"
+import Submit from "./Submit";
  
 
 const Tabform = () => {
   const [data, setData] = useState({
-    name: "Ankit",
-    age: "20",
-    email :"ankit@gmail.com",
+    name: "",
+    age: "",
+    email :"",
     interests: ["coding","music","football"],
     theme:"dark",
   });
@@ -16,6 +17,8 @@ const Tabform = () => {
   const [errors, setErrors] = useState({});
 
   const [activeTab, setActiveTab] = useState(0);
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const tabs = [   // config driven data 
     {
@@ -80,13 +83,20 @@ const Tabform = () => {
   };
 
   const handleSubmitClick = () => {
-
-    // Make API call or you can do whatever you want after submit
-    console.log(data);
+    const isValid = tabs.every((tab) => tab.validate());
+    if (isValid) {
+      console.log("Final Data Submitted:", data);
+      setIsSubmitted(true); // Redirect to Submit page
+    }
   };
 
   return (
-    <div>
+     <div>
+     { isSubmitted ? (
+      <Submit data ={data}/>
+     )
+   : (
+    <>
      <div className="heading-container">
       {tabs.map((t, index) => (
         <div 
@@ -112,6 +122,8 @@ const Tabform = () => {
 
         {activeTab === tabs.length -1 && <button onClick={handleSubmitClick}> Submit </button>}
       </div>
+      </>
+    )}
 
     </div>
   );
